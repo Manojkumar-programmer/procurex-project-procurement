@@ -7,8 +7,10 @@ import Index from "./pages/Index";
 import Login from "./pages/Login";
 import IndustryDashboard from "./pages/IndustryDashboard";
 import CreateRFQ from "./pages/CreateRFQ";
+import ReorderPage from "./pages/ReorderPage";
 import SupplierComparison from "./pages/SupplierComparison";
 import SupplierDashboard from "./pages/SupplierDashboard";
+import SupplierCatalog from "./pages/SupplierCatalog";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -28,9 +30,11 @@ const App = () => (
           <Route path="/industry/rfq/create" element={<CreateRFQ />} />
           <Route path="/industry/rfq/compare" element={<SupplierComparison />} />
           <Route path="/industry/rfq/:id/compare" element={<SupplierComparison />} />
+          <Route path="/industry/reorder" element={<ReorderPage />} />
           
           {/* Supplier Routes */}
           <Route path="/supplier/dashboard" element={<SupplierDashboard />} />
+          <Route path="/supplier/catalog" element={<SupplierCatalog />} />
           
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />

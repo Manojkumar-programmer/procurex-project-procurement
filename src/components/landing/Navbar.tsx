@@ -26,8 +26,8 @@ const Navbar = () => {
             <a href="#how-it-works" className="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors animated-underline">
               How It Works
             </a>
-            <a href="#pricing" className="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors animated-underline">
-              Pricing
+            <a href="#about" className="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors animated-underline">
+              About Us
             </a>
           </div>
 
@@ -60,8 +60,8 @@ const Navbar = () => {
               <a href="#how-it-works" className="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors px-2 py-2">
                 How It Works
               </a>
-              <a href="#pricing" className="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors px-2 py-2">
-                Pricing
+              <a href="#about" className="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors px-2 py-2">
+                About Us
               </a>
               <div className="flex flex-col gap-2 pt-4 border-t border-border">
                 <Link to="/login">

@@ -1,8 +1,11 @@
 import { Button } from "@/components/ui/button";
-import { ArrowRight, Play, CheckCircle2, Sparkles } from "lucide-react";
+import { ArrowRight, Search, CheckCircle2, Sparkles } from "lucide-react";
 import { Link } from "react-router-dom";
+import { useState } from "react";
 
 const HeroSection = () => {
+  const [searchQuery, setSearchQuery] = useState("");
+
   const stats = [
     { value: "₹500Cr+", label: "Procurement Managed" },
     { value: "2,000+", label: "Verified Suppliers" },
@@ -27,106 +30,86 @@ const HeroSection = () => {
       </div>
 
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-        <div className="grid lg:grid-cols-2 gap-12 items-center">
-          {/* Left Column - Content */}
-          <div className="text-center lg:text-left">
-            {/* Badge */}
-            <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-primary-foreground/10 border border-primary-foreground/20 mb-6 animate-slide-up">
-              <Sparkles className="w-4 h-4 text-accent" />
-              <span className="text-sm font-medium text-primary-foreground/90">AI-Powered Procurement Platform</span>
-            </div>
+        <div className="max-w-4xl mx-auto text-center">
+          {/* Badge */}
+          <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-primary-foreground/10 border border-primary-foreground/20 mb-6 animate-slide-up">
+            <Sparkles className="w-4 h-4 text-accent" />
+            <span className="text-sm font-medium text-primary-foreground/90">AI-Powered Procurement Platform</span>
+          </div>
 
-            {/* Headline */}
-            <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold text-primary-foreground leading-tight mb-6 animate-slide-up animate-delay-100">
-              One Platform.{" "}
-              <span className="text-gradient-ai">All Industrial</span>{" "}
-              Procurement.
-            </h1>
+          {/* Headline */}
+          <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold text-primary-foreground leading-tight mb-6 animate-slide-up animate-delay-100">
+            One Platform.{" "}
+            <span className="text-gradient-ai">All Industrial</span>{" "}
+            Procurement.
+          </h1>
 
-            {/* Sub-headline */}
-            <p className="text-lg sm:text-xl text-primary-foreground/70 mb-8 max-w-xl mx-auto lg:mx-0 animate-slide-up animate-delay-200">
-              Manage suppliers, RFQs, pricing, verification, and project-based procurement in one intelligent system. Built for India's project-based industries.
-            </p>
+          {/* Sub-headline */}
+          <p className="text-lg sm:text-xl text-primary-foreground/70 mb-8 max-w-xl mx-auto animate-slide-up animate-delay-200">
+            Manage suppliers, RFQs, pricing, and project-based procurement in one intelligent system.
+          </p>
 
-            {/* CTA Buttons */}
-            <div className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start mb-12 animate-slide-up animate-delay-300">
-              <Link to="/industry/dashboard">
-                <Button variant="cta" size="xl" className="w-full sm:w-auto">
-                  Start as Industry
-                  <ArrowRight className="w-5 h-5" />
-                </Button>
-              </Link>
-              <Link to="/supplier/dashboard">
-                <Button variant="heroOutline" size="xl" className="w-full sm:w-auto">
-                  Join as Supplier
-                </Button>
-              </Link>
-            </div>
-
-            {/* Trust Indicators */}
-            <div className="flex flex-wrap gap-6 justify-center lg:justify-start animate-slide-up animate-delay-400">
-              {[
-                "GST Verified Suppliers",
-                "Project-Based RFQs",
-                "AI Price Optimization"
-              ].map((item, i) => (
-                <div key={i} className="flex items-center gap-2 text-primary-foreground/60">
-                  <CheckCircle2 className="w-4 h-4 text-accent" />
-                  <span className="text-sm">{item}</span>
-                </div>
-              ))}
+          {/* Large Search Bar */}
+          <div className="max-w-2xl mx-auto mb-8 animate-slide-up animate-delay-300">
+            <div className="relative">
+              <Search className="absolute left-5 top-1/2 -translate-y-1/2 w-6 h-6 text-muted-foreground" />
+              <input
+                type="text"
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+                placeholder="Search materials, products, or suppliers..."
+                className="w-full pl-14 pr-32 py-5 text-lg rounded-2xl bg-white/95 border-0 shadow-xl focus:ring-4 focus:ring-accent/20 focus:outline-none transition-all text-foreground placeholder:text-muted-foreground"
+              />
+              <Button variant="cta" size="lg" className="absolute right-2 top-1/2 -translate-y-1/2">
+                Search
+                <ArrowRight className="w-5 h-5" />
+              </Button>
             </div>
           </div>
 
-          {/* Right Column - Stats/Visual */}
-          <div className="relative animate-slide-up animate-delay-300">
-            {/* Stats Cards */}
-            <div className="grid grid-cols-3 gap-4">
-              {stats.map((stat, i) => (
-                <div
-                  key={i}
-                  className="glass rounded-2xl p-6 text-center transform hover:scale-105 transition-transform duration-300"
-                  style={{ animationDelay: `${(i + 4) * 100}ms` }}
-                >
-                  <div className="text-2xl sm:text-3xl font-bold text-primary-foreground mb-1">
-                    {stat.value}
-                  </div>
-                  <div className="text-xs sm:text-sm text-primary-foreground/60">
-                    {stat.label}
-                  </div>
-                </div>
-              ))}
-            </div>
+          {/* CTA Buttons */}
+          <div className="flex flex-col sm:flex-row gap-4 justify-center mb-12 animate-slide-up animate-delay-300">
+            <Link to="/industry/dashboard">
+              <Button variant="heroOutline" size="xl" className="w-full sm:w-auto">
+                Start as Industry
+              </Button>
+            </Link>
+            <Link to="/supplier/dashboard">
+              <Button variant="heroOutline" size="xl" className="w-full sm:w-auto">
+                Join as Supplier
+              </Button>
+            </Link>
+          </div>
 
-            {/* Dashboard Preview */}
-            <div className="mt-6 glass rounded-2xl p-1 shadow-strong">
-              <div className="bg-sidebar rounded-xl p-4">
-                <div className="flex items-center gap-3 mb-4">
-                  <div className="w-3 h-3 rounded-full bg-destructive/60" />
-                  <div className="w-3 h-3 rounded-full bg-warning/60" />
-                  <div className="w-3 h-3 rounded-full bg-success/60" />
-                  <span className="text-xs text-sidebar-foreground/50 ml-2">Industry Dashboard</span>
+          {/* Trust Indicators */}
+          <div className="flex flex-wrap gap-6 justify-center mb-12 animate-slide-up animate-delay-400">
+            {[
+              "Verified Suppliers",
+              "Project-Based RFQs",
+              "AI Price Optimization"
+            ].map((item, i) => (
+              <div key={i} className="flex items-center gap-2 text-primary-foreground/60">
+                <CheckCircle2 className="w-4 h-4 text-accent" />
+                <span className="text-sm">{item}</span>
+              </div>
+            ))}
+          </div>
+
+          {/* Stats Cards - Vertical Layout with Lighter Color */}
+          <div className="flex flex-col gap-4 max-w-xs mx-auto animate-slide-up animate-delay-500">
+            {stats.map((stat, i) => (
+              <div
+                key={i}
+                className="bg-white/20 backdrop-blur-sm border border-white/30 rounded-2xl p-5 text-center transform hover:scale-105 transition-transform duration-300"
+              >
+                <div className="text-2xl sm:text-3xl font-bold text-primary-foreground mb-1">
+                  {stat.value}
                 </div>
-                <div className="space-y-3">
-                  <div className="flex items-center justify-between p-3 bg-sidebar-accent rounded-lg">
-                    <div className="flex items-center gap-3">
-                      <div className="w-8 h-8 rounded-lg bg-accent/20 flex items-center justify-center">
-                        <Sparkles className="w-4 h-4 text-accent" />
-                      </div>
-                      <div>
-                        <div className="text-sm font-medium text-sidebar-foreground">Metro Rail Phase II</div>
-                        <div className="text-xs text-sidebar-foreground/50">3 Active RFQs</div>
-                      </div>
-                    </div>
-                    <span className="badge-ai text-xs">AI Matched</span>
-                  </div>
-                  <div className="h-2 bg-sidebar-accent rounded-full overflow-hidden">
-                    <div className="h-full w-3/4 bg-gradient-ai rounded-full" />
-                  </div>
-                  <div className="text-xs text-sidebar-foreground/50 text-right">75% Procurement Complete</div>
+                <div className="text-sm text-primary-foreground/70">
+                  {stat.label}
                 </div>
               </div>
-            </div>
+            ))}
           </div>
         </div>
       </div>

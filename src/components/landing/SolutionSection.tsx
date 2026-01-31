@@ -1,4 +1,4 @@
-import { Check, Sparkles, Shield, Zap, BarChart3, RefreshCw } from "lucide-react";
+import { Sparkles, Zap, BarChart3, RefreshCw, Check } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
 
@@ -8,12 +8,6 @@ const features = [
     title: "AI-Powered RFQ Matching",
     description: "Get 3-5 verified suppliers shortlisted in 30 seconds based on your requirements.",
     color: "ai"
-  },
-  {
-    icon: Shield,
-    title: "Verified Supplier Network",
-    description: "Every supplier is GST verified with performance scores and buyer ratings.",
-    color: "verified"
   },
   {
     icon: Zap,
@@ -36,12 +30,11 @@ const features = [
 ];
 
 const comparisons = [
-  { feature: "Supplier Verification", procurex: true, indiamart: false },
-  { feature: "Project-Based Tracking", procurex: true, indiamart: false },
-  { feature: "AI-Powered Matching", procurex: true, indiamart: false },
-  { feature: "Bulk RFQ Management", procurex: true, indiamart: false },
-  { feature: "Performance Analytics", procurex: true, indiamart: false },
-  { feature: "Delivery Tracking", procurex: true, indiamart: false },
+  { feature: "Project-Based Tracking", procurex: true, others: false },
+  { feature: "AI-Powered Matching", procurex: true, others: false },
+  { feature: "Bulk RFQ Management", procurex: true, others: false },
+  { feature: "Performance Analytics", procurex: true, others: false },
+  { feature: "Delivery Tracking", procurex: true, others: false },
 ];
 
 const SolutionSection = () => {
@@ -57,12 +50,12 @@ const SolutionSection = () => {
             Why Procurex is Different
           </h2>
           <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-            A centralized, AI-assisted, verified B2B procurement ecosystem designed for project-based purchasing
+            A centralized, AI-assisted procurement ecosystem designed for project-based purchasing
           </p>
         </div>
 
         {/* Features Grid */}
-        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 mb-20">
+        <div className="grid md:grid-cols-2 lg:grid-cols-2 gap-6 mb-20 max-w-4xl mx-auto">
           {features.map((feature, index) => (
             <div
               key={index}
@@ -79,15 +72,17 @@ const SolutionSection = () => {
               </p>
             </div>
           ))}
-          
-          {/* CTA Card */}
-          <div className="card-elevated p-6 bg-gradient-ai text-ai-foreground flex flex-col justify-center">
-            <h3 className="text-xl font-bold mb-3">Ready to Transform Your Procurement?</h3>
-            <p className="text-ai-foreground/80 text-sm mb-4">
+        </div>
+
+        {/* CTA Card */}
+        <div className="max-w-2xl mx-auto mb-20">
+          <div className="card-elevated p-8 bg-gradient-ai text-ai-foreground text-center">
+            <h3 className="text-2xl font-bold mb-3">Ready to Transform Your Procurement?</h3>
+            <p className="text-ai-foreground/80 mb-6">
               Join 500+ companies already saving time and money.
             </p>
             <Link to="/industry/dashboard">
-              <Button variant="hero" className="w-full bg-white text-primary hover:bg-white/90">
+              <Button variant="hero" className="bg-white text-primary hover:bg-white/90">
                 Get Started Free
               </Button>
             </Link>
@@ -109,7 +104,7 @@ const SolutionSection = () => {
             <div className="grid grid-cols-3 gap-4 mb-4 text-center">
               <div className="text-sm font-medium text-muted-foreground">Feature</div>
               <div className="text-sm font-semibold text-accent">Procurex</div>
-              <div className="text-sm font-medium text-muted-foreground">IndiaMART/Others</div>
+              <div className="text-sm font-medium text-muted-foreground">Others</div>
             </div>
             
             <div className="space-y-3">
