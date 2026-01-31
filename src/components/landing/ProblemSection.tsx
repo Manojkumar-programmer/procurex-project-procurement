@@ -1,4 +1,4 @@
-import { AlertTriangle, Phone, MessageCircle, FileSpreadsheet, Clock, ShieldAlert } from "lucide-react";
+import { AlertTriangle, Phone, FileSpreadsheet, Clock } from "lucide-react";
 
 const problems = [
   {
@@ -12,24 +12,9 @@ const problems = [
     description: "Managing complex BOQs and supplier data in disconnected spreadsheets."
   },
   {
-    icon: AlertTriangle,
-    title: "IndiaMART Spam",
-    description: "Flooded with unverified suppliers and irrelevant quotes."
-  },
-  {
     icon: Clock,
     title: "Time Wasted",
-    description: "Hours spent on supplier discovery, comparison, and follow-ups."
-  },
-  {
-    icon: ShieldAlert,
-    title: "Quality Risks",
-    description: "Unverified suppliers leading to inconsistent quality and delays."
-  },
-  {
-    icon: MessageCircle,
-    title: "No Accountability",
-    description: "Price mismatches and delivery delays with no system to track."
+    description: "Hours spent on supplier discovery, comparison, and repeated follow-ups."
   }
 ];
 
@@ -40,18 +25,18 @@ const ProblemSection = () => {
         {/* Section Header */}
         <div className="text-center mb-16">
           <span className="inline-block px-4 py-1.5 rounded-full bg-destructive/10 text-destructive text-sm font-medium mb-4">
-            The Problem
+            The Challenge
           </span>
           <h2 className="text-3xl sm:text-4xl font-bold text-foreground mb-4">
-            Industrial Procurement is Broken
+            Industrial Procurement Challenges
           </h2>
           <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-            Indian industries lose ₹1000s of crores annually due to fragmented procurement processes
+            Indian industries face significant inefficiencies in procurement processes
           </p>
         </div>
 
         {/* Problem Grid */}
-        <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
+        <div className="grid sm:grid-cols-3 gap-6 max-w-4xl mx-auto">
           {problems.map((problem, index) => (
             <div
               key={index}
@@ -83,7 +68,7 @@ const ProblemSection = () => {
             </div>
             <div>
               <div className="text-3xl sm:text-4xl font-bold text-primary-foreground mb-2">₹2L+</div>
-              <div className="text-primary-foreground/70 text-sm">Lost per project to unverified supplier issues</div>
+              <div className="text-primary-foreground/70 text-sm">Lost per project to procurement inefficiencies</div>
             </div>
           </div>
         </div>

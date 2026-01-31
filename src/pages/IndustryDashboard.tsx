@@ -1,83 +1,62 @@
 import { 
-  FolderKanban, 
-  FileText, 
-  TrendingDown, 
-  Clock, 
   Sparkles,
   ArrowRight,
-  Bell
+  Bell,
+  Package,
+  FolderKanban,
+  RefreshCw,
+  CheckCircle2
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import DashboardSidebar from "@/components/dashboard/DashboardSidebar";
-import MetricCard from "@/components/dashboard/MetricCard";
-import ProjectCard from "@/components/dashboard/ProjectCard";
-import RFQStatusCard from "@/components/dashboard/RFQStatusCard";
 import { Link } from "react-router-dom";
 
-const mockProjects = [
+const mockCompletedOrders = [
   {
     id: "1",
-    name: "Metro Rail Phase II",
-    location: "Mumbai, Maharashtra",
-    status: "active" as const,
-    progress: 75,
-    rfqCount: 12,
-    budget: "45Cr",
-    deadline: "Mar 2025"
+    product: "TMT Steel Bars Fe-500D",
+    quantity: "500 Tons",
+    supplier: "Tata Steel Distributors",
+    completedDate: "Jan 15, 2026",
+    totalValue: "₹2.6 Cr",
+    project: "Metro Rail Phase II"
   },
   {
     id: "2",
-    name: "Highway Expansion NH-48",
-    location: "Gujarat",
-    status: "active" as const,
-    progress: 45,
-    rfqCount: 8,
-    budget: "28Cr",
-    deadline: "Jun 2025"
+    product: "Cement OPC 53 Grade",
+    quantity: "10,000 Bags",
+    supplier: "UltraTech Cement",
+    completedDate: "Jan 10, 2026",
+    totalValue: "₹35 L",
+    project: "Highway Expansion"
   },
   {
     id: "3",
-    name: "Industrial Park Setup",
-    location: "Pune, Maharashtra",
-    status: "on-hold" as const,
-    progress: 20,
-    rfqCount: 3,
-    budget: "15Cr",
-    deadline: "Dec 2025"
+    product: "Electrical Cables",
+    quantity: "5,000 meters",
+    supplier: "Havells India",
+    completedDate: "Dec 28, 2025",
+    totalValue: "₹45 L",
+    project: "Industrial Park"
   }
 ];
 
-const mockRFQs = [
+const mockCompletedProjects = [
   {
-    id: "rfq-1",
-    title: "TMT Steel Bars - 500 Ton",
-    project: "Metro Rail Phase II",
-    itemCount: 4,
-    status: "quoted" as const,
-    quotesReceived: 4,
-    totalQuotesExpected: 5,
-    deadline: "Due in 2 days",
-    estimatedValue: "₹2.5 Cr"
+    id: "1",
+    name: "Industrial Park Phase I",
+    location: "Pune, Maharashtra",
+    completedDate: "Dec 2025",
+    totalProcurement: "₹12 Cr",
+    ordersCount: 45
   },
   {
-    id: "rfq-2",
-    title: "Cement (OPC 53 Grade)",
-    project: "Highway Expansion",
-    itemCount: 2,
-    status: "sent" as const,
-    quotesReceived: 2,
-    totalQuotesExpected: 5,
-    deadline: "Due in 5 days",
-    estimatedValue: "₹85 L"
-  },
-  {
-    id: "rfq-3",
-    title: "Electrical Cables & Wiring",
-    project: "Industrial Park",
-    itemCount: 8,
-    status: "negotiation" as const,
-    deadline: "Due in 1 day",
-    estimatedValue: "₹45 L"
+    id: "2",
+    name: "Warehouse Complex",
+    location: "Nagpur, Maharashtra",
+    completedDate: "Nov 2025",
+    totalProcurement: "₹8 Cr",
+    ordersCount: 32
   }
 ];
 
@@ -86,12 +65,12 @@ const IndustryDashboard = () => {
     <div className="min-h-screen bg-background">
       <DashboardSidebar type="industry" />
       
-      <main className="ml-64 p-8">
+      <main className="p-8 pl-20">
         {/* Header */}
         <div className="flex items-center justify-between mb-8">
           <div>
             <h1 className="text-2xl font-bold text-foreground mb-1">Welcome back, Rajesh</h1>
-            <p className="text-muted-foreground">Here's what's happening with your procurement today</p>
+            <p className="text-muted-foreground">Here's your procurement overview</p>
           </div>
           <div className="flex items-center gap-4">
             <Button variant="ghost" size="icon" className="relative">
@@ -107,97 +86,111 @@ const IndustryDashboard = () => {
           </div>
         </div>
 
-        {/* AI Insights Banner */}
-        <div className="mb-8 p-4 rounded-xl bg-gradient-to-r from-ai/10 to-accent/10 border border-ai/20">
+        {/* Main Content */}
+        <div className="grid lg:grid-cols-2 gap-8">
+          {/* Completed Orders Section */}
+          <div>
+            <div className="flex items-center justify-between mb-4">
+              <h2 className="text-lg font-semibold text-foreground flex items-center gap-2">
+                <Package className="w-5 h-5 text-accent" />
+                Completed Orders
+              </h2>
+            </div>
+            <div className="space-y-4">
+              {mockCompletedOrders.map((order) => (
+                <div key={order.id} className="card-elevated p-5">
+                  <div className="flex items-start justify-between mb-3">
+                    <div>
+                      <div className="flex items-center gap-2 mb-1">
+                        <h4 className="font-semibold text-foreground">{order.product}</h4>
+                        <span className="badge-verified">
+                          <CheckCircle2 className="w-3 h-3" />
+                          Completed
+                        </span>
+                      </div>
+                      <p className="text-sm text-muted-foreground">
+                        {order.quantity} • {order.supplier}
+                      </p>
+                    </div>
+                    <span className="font-semibold text-foreground">{order.totalValue}</span>
+                  </div>
+                  <div className="flex items-center justify-between">
+                    <div className="text-sm text-muted-foreground">
+                      {order.project} • {order.completedDate}
+                    </div>
+                    <Link to="/industry/reorder">
+                      <Button variant="outline" size="sm">
+                        <RefreshCw className="w-4 h-4" />
+                        Reorder
+                      </Button>
+                    </Link>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          {/* Completed Projects Section */}
+          <div>
+            <div className="flex items-center justify-between mb-4">
+              <h2 className="text-lg font-semibold text-foreground flex items-center gap-2">
+                <FolderKanban className="w-5 h-5 text-ai" />
+                Completed Projects
+              </h2>
+            </div>
+            <div className="space-y-4">
+              {mockCompletedProjects.map((project) => (
+                <div key={project.id} className="card-elevated p-5">
+                  <div className="flex items-start justify-between mb-3">
+                    <div>
+                      <div className="flex items-center gap-2 mb-1">
+                        <h4 className="font-semibold text-foreground">{project.name}</h4>
+                        <span className="badge-verified">
+                          <CheckCircle2 className="w-3 h-3" />
+                          Completed
+                        </span>
+                      </div>
+                      <p className="text-sm text-muted-foreground">{project.location}</p>
+                    </div>
+                    <span className="font-semibold text-foreground">{project.totalProcurement}</span>
+                  </div>
+                  <div className="flex items-center justify-between">
+                    <div className="text-sm text-muted-foreground">
+                      {project.ordersCount} orders • Completed {project.completedDate}
+                    </div>
+                    <Link to="/industry/reorder">
+                      <Button variant="outline" size="sm">
+                        <RefreshCw className="w-4 h-4" />
+                        Reorder
+                      </Button>
+                    </Link>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+
+        {/* Reorder CTA */}
+        <div className="mt-8 p-6 rounded-xl bg-gradient-to-r from-ai/10 to-accent/10 border border-ai/20">
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-3">
-              <div className="w-10 h-10 rounded-xl bg-ai/20 flex items-center justify-center">
-                <Sparkles className="w-5 h-5 text-ai" />
+              <div className="w-12 h-12 rounded-xl bg-ai/20 flex items-center justify-center">
+                <RefreshCw className="w-6 h-6 text-ai" />
               </div>
               <div>
-                <h3 className="font-semibold text-foreground">AI Insight</h3>
+                <h3 className="font-semibold text-foreground">Quick Reorder</h3>
                 <p className="text-sm text-muted-foreground">
-                  3 RFQs have received quotes. Steel prices dropped 5% this week - good time to finalize orders.
+                  Reorder materials from your completed orders with updated pricing
                 </p>
               </div>
             </div>
-            <Button variant="ai" size="sm">
-              View Details
-              <ArrowRight className="w-4 h-4" />
-            </Button>
-          </div>
-        </div>
-
-        {/* Metrics */}
-        <div className="grid grid-cols-4 gap-6 mb-8">
-          <MetricCard
-            title="Active Projects"
-            value="3"
-            icon={FolderKanban}
-            iconColor="accent"
-          />
-          <MetricCard
-            title="Open RFQs"
-            value="8"
-            change="+2 this week"
-            changeType="neutral"
-            icon={FileText}
-            iconColor="ai"
-          />
-          <MetricCard
-            title="Cost Savings"
-            value="₹45L"
-            change="+12%"
-            changeType="positive"
-            icon={TrendingDown}
-            iconColor="success"
-          />
-          <MetricCard
-            title="Avg. Response Time"
-            value="4.2 hrs"
-            change="-30%"
-            changeType="positive"
-            icon={Clock}
-            iconColor="cta"
-          />
-        </div>
-
-        {/* Main Content Grid */}
-        <div className="grid lg:grid-cols-3 gap-8">
-          {/* Projects Section */}
-          <div className="lg:col-span-2">
-            <div className="flex items-center justify-between mb-4">
-              <h2 className="text-lg font-semibold text-foreground">Active Projects</h2>
-              <Link to="/industry/projects">
-                <Button variant="ghost" size="sm">
-                  View All
-                  <ArrowRight className="w-4 h-4" />
-                </Button>
-              </Link>
-            </div>
-            <div className="grid md:grid-cols-2 gap-4">
-              {mockProjects.slice(0, 2).map((project) => (
-                <ProjectCard key={project.id} {...project} />
-              ))}
-            </div>
-          </div>
-
-          {/* RFQ Status Section */}
-          <div>
-            <div className="flex items-center justify-between mb-4">
-              <h2 className="text-lg font-semibold text-foreground">Recent RFQs</h2>
-              <Link to="/industry/rfq">
-                <Button variant="ghost" size="sm">
-                  View All
-                  <ArrowRight className="w-4 h-4" />
-                </Button>
-              </Link>
-            </div>
-            <div className="space-y-4">
-              {mockRFQs.map((rfq) => (
-                <RFQStatusCard key={rfq.id} {...rfq} />
-              ))}
-            </div>
+            <Link to="/industry/reorder">
+              <Button variant="ai">
+                View Reorder Options
+                <ArrowRight className="w-4 h-4" />
+              </Button>
+            </Link>
           </div>
         </div>
       </main>

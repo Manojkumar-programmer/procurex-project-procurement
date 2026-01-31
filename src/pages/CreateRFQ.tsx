@@ -1,15 +1,12 @@
 import { useState } from "react";
 import { 
   ArrowLeft, 
-  Upload, 
   Plus, 
   Trash2, 
   Sparkles, 
   Clock,
   CheckCircle2,
-  Building2,
-  Star,
-  ShieldCheck
+  Upload
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -31,8 +28,6 @@ interface ShortlistedSupplier {
   id: string;
   name: string;
   location: string;
-  rating: number;
-  verified: boolean;
   matchScore: number;
   deliveryDays: string;
   priceRange: string;
@@ -43,8 +38,6 @@ const mockSuppliers: ShortlistedSupplier[] = [
     id: "s1",
     name: "Tata Steel Distributors",
     location: "Mumbai, Maharashtra",
-    rating: 4.8,
-    verified: true,
     matchScore: 95,
     deliveryDays: "5-7 days",
     priceRange: "₹52,000 - ₹54,000/ton"
@@ -53,8 +46,6 @@ const mockSuppliers: ShortlistedSupplier[] = [
     id: "s2",
     name: "JSW Steel India",
     location: "Pune, Maharashtra",
-    rating: 4.6,
-    verified: true,
     matchScore: 92,
     deliveryDays: "7-10 days",
     priceRange: "₹51,000 - ₹53,000/ton"
@@ -63,8 +54,6 @@ const mockSuppliers: ShortlistedSupplier[] = [
     id: "s3",
     name: "SAIL Authorized Dealer",
     location: "Nagpur, Maharashtra",
-    rating: 4.5,
-    verified: true,
     matchScore: 88,
     deliveryDays: "10-12 days",
     priceRange: "₹50,500 - ₹52,500/ton"
@@ -73,8 +62,6 @@ const mockSuppliers: ShortlistedSupplier[] = [
     id: "s4",
     name: "Jindal Steel Supplies",
     location: "Ahmedabad, Gujarat",
-    rating: 4.4,
-    verified: true,
     matchScore: 85,
     deliveryDays: "8-10 days",
     priceRange: "₹51,500 - ₹53,500/ton"
@@ -117,7 +104,6 @@ const CreateRFQ = () => {
 
   const handleAIShortlist = () => {
     setIsShortlisting(true);
-    // Simulate AI processing
     setTimeout(() => {
       setShortlistedSuppliers(mockSuppliers);
       setIsShortlisting(false);
@@ -134,15 +120,14 @@ const CreateRFQ = () => {
   };
 
   const handleSendRFQ = () => {
-    // Navigate to comparison page after sending
-    navigate("/industry/rfq/compare");
+    navigate("/industry/dashboard");
   };
 
   return (
     <div className="min-h-screen bg-background">
       <DashboardSidebar type="industry" />
       
-      <main className="ml-64 p-8">
+      <main className="p-8 pl-20">
         {/* Header */}
         <div className="flex items-center gap-4 mb-8">
           <Link to="/industry/dashboard">
@@ -213,20 +198,7 @@ const CreateRFQ = () => {
         {/* Step 2: Add Requirements */}
         {step === 2 && (
           <div className="max-w-4xl">
-            {/* Upload BOQ */}
-            <div className="card-elevated p-6 mb-6">
-              <div className="flex items-center justify-between mb-4">
-                <h3 className="font-semibold text-foreground">Upload BOQ (Optional)</h3>
-                <span className="text-sm text-muted-foreground">Excel or PDF</span>
-              </div>
-              <div className="border-2 border-dashed border-border rounded-xl p-8 text-center hover:border-accent/50 transition-colors cursor-pointer">
-                <Upload className="w-10 h-10 mx-auto text-muted-foreground mb-3" />
-                <p className="text-muted-foreground mb-1">Drag and drop your BOQ file here</p>
-                <p className="text-sm text-muted-foreground/70">or click to browse</p>
-              </div>
-            </div>
-
-            {/* Manual Entry */}
+            {/* Manual Entry - First */}
             <div className="card-elevated p-6 mb-6">
               <div className="flex items-center justify-between mb-4">
                 <h3 className="font-semibold text-foreground">Add Requirements Manually</h3>
@@ -306,6 +278,18 @@ const CreateRFQ = () => {
               </div>
             </div>
 
+            {/* Upload BOQ - Optional */}
+            <div className="card-elevated p-6 mb-6">
+              <div className="flex items-center justify-between mb-4">
+                <h3 className="font-semibold text-foreground">Upload BOQ (Optional)</h3>
+                <span className="text-sm text-muted-foreground">Excel or PDF</span>
+              </div>
+              <div className="border-2 border-dashed border-border rounded-xl p-6 text-center hover:border-accent/50 transition-colors cursor-pointer">
+                <Upload className="w-8 h-8 mx-auto text-muted-foreground mb-2" />
+                <p className="text-sm text-muted-foreground">Drag and drop your BOQ file here or click to browse</p>
+              </div>
+            </div>
+
             {/* Additional Notes */}
             <div className="card-elevated p-6 mb-6">
               <Label className="text-foreground font-medium">Additional Notes (Optional)</Label>
@@ -326,7 +310,7 @@ const CreateRFQ = () => {
           </div>
         )}
 
-        {/* Step 3: AI Shortlisting */}
+        {/* Step 3: AI Shortlisting Animation */}
         {isShortlisting && (
           <div className="max-w-2xl mx-auto text-center py-16">
             <div className="w-20 h-20 mx-auto rounded-2xl bg-gradient-to-br from-ai to-accent flex items-center justify-center mb-6 animate-pulse">
@@ -337,7 +321,7 @@ const CreateRFQ = () => {
               Analyzing 2,000+ verified suppliers based on your requirements
             </p>
             <div className="space-y-3">
-              {["Matching product specifications...", "Checking delivery capabilities...", "Analyzing pricing history...", "Verifying supplier credentials..."].map((text, i) => (
+              {["Matching product specifications...", "Checking delivery capabilities...", "Analyzing pricing history..."].map((text, i) => (
                 <div 
                   key={i} 
                   className="flex items-center justify-center gap-3 text-sm text-muted-foreground animate-fade-in"
@@ -359,8 +343,8 @@ const CreateRFQ = () => {
                 <CheckCircle2 className="w-5 h-5 text-success" />
               </div>
               <div>
-                <h3 className="font-semibold text-foreground">AI Shortlisted 4 Verified Suppliers</h3>
-                <p className="text-sm text-muted-foreground">Based on your requirements, delivery location, and past performance</p>
+                <h3 className="font-semibold text-foreground">AI Shortlisted 4 Suppliers</h3>
+                <p className="text-sm text-muted-foreground">Based on your requirements and delivery location</p>
               </div>
             </div>
 
@@ -388,27 +372,12 @@ const CreateRFQ = () => {
                     <div className="flex-1">
                       <div className="flex items-center gap-3 mb-2">
                         <h4 className="font-semibold text-foreground">{supplier.name}</h4>
-                        {supplier.verified && (
-                          <span className="badge-verified">
-                            <ShieldCheck className="w-3 h-3" />
-                            Verified
-                          </span>
-                        )}
                         <span className="badge-ai">
                           <Sparkles className="w-3 h-3" />
                           {supplier.matchScore}% Match
                         </span>
                       </div>
-                      <div className="flex items-center gap-4 text-sm text-muted-foreground mb-3">
-                        <span className="flex items-center gap-1">
-                          <Building2 className="w-4 h-4" />
-                          {supplier.location}
-                        </span>
-                        <span className="flex items-center gap-1">
-                          <Star className="w-4 h-4 fill-warning text-warning" />
-                          {supplier.rating}
-                        </span>
-                      </div>
+                      <p className="text-sm text-muted-foreground mb-3">{supplier.location}</p>
                       <div className="flex items-center gap-6 text-sm">
                         <div>
                           <span className="text-muted-foreground">Delivery: </span>

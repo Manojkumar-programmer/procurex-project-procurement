@@ -1,7 +1,5 @@
 import { 
   ArrowLeft, 
-  Star, 
-  ShieldCheck, 
   Truck, 
   Clock, 
   CheckCircle2,
@@ -18,9 +16,6 @@ interface SupplierQuote {
   name: string;
   logo: string;
   location: string;
-  rating: number;
-  verified: boolean;
-  trustScore: number;
   pricePerUnit: number;
   totalPrice: number;
   deliveryDays: number;
@@ -39,9 +34,6 @@ const mockQuotes: SupplierQuote[] = [
     name: "Tata Steel Distributors",
     logo: "TS",
     location: "Mumbai, Maharashtra",
-    rating: 4.8,
-    verified: true,
-    trustScore: 95,
     pricePerUnit: 52500,
     totalPrice: 26250000,
     deliveryDays: 7,
@@ -58,9 +50,6 @@ const mockQuotes: SupplierQuote[] = [
     name: "JSW Steel India",
     logo: "JS",
     location: "Pune, Maharashtra",
-    rating: 4.6,
-    verified: true,
-    trustScore: 92,
     pricePerUnit: 51000,
     totalPrice: 25500000,
     deliveryDays: 10,
@@ -77,9 +66,6 @@ const mockQuotes: SupplierQuote[] = [
     name: "SAIL Authorized",
     logo: "SA",
     location: "Nagpur, Maharashtra",
-    rating: 4.5,
-    verified: true,
-    trustScore: 88,
     pricePerUnit: 51500,
     totalPrice: 25750000,
     deliveryDays: 12,
@@ -96,9 +82,6 @@ const mockQuotes: SupplierQuote[] = [
     name: "Jindal Steel",
     logo: "JD",
     location: "Ahmedabad, Gujarat",
-    rating: 4.4,
-    verified: true,
-    trustScore: 85,
     pricePerUnit: 52000,
     totalPrice: 26000000,
     deliveryDays: 9,
@@ -127,7 +110,7 @@ const SupplierComparison = () => {
     <div className="min-h-screen bg-background">
       <DashboardSidebar type="industry" />
       
-      <main className="ml-64 p-8">
+      <main className="p-8 pl-20">
         {/* Header */}
         <div className="flex items-center justify-between mb-8">
           <div className="flex items-center gap-4">
@@ -156,8 +139,7 @@ const SupplierComparison = () => {
             <div className="flex-1">
               <h3 className="font-semibold text-foreground">AI Recommendation</h3>
               <p className="text-sm text-muted-foreground">
-                <span className="font-medium text-foreground">Tata Steel Distributors</span> offers the best balance of price, delivery time, and reliability. 
-                While JSW has a slightly lower price, Tata's faster delivery and higher trust score make it the recommended choice.
+                <span className="font-medium text-foreground">Tata Steel Distributors</span> offers the best balance of price, delivery time, and reliability.
               </p>
             </div>
             <Button variant="ai" size="sm">
@@ -177,13 +159,12 @@ const SupplierComparison = () => {
                   <th className="text-center p-4">Price/Unit</th>
                   <th className="text-center p-4">Total Price</th>
                   <th className="text-center p-4">Delivery</th>
-                  <th className="text-center p-4">Trust Score</th>
                   <th className="text-center p-4">Performance</th>
                   <th className="text-center p-4">Action</th>
                 </tr>
               </thead>
               <tbody>
-                {mockQuotes.map((quote, index) => (
+                {mockQuotes.map((quote) => (
                   <tr 
                     key={quote.id} 
                     className={`border-b border-border hover:bg-muted/30 transition-colors ${
@@ -206,16 +187,7 @@ const SupplierComparison = () => {
                               </span>
                             )}
                           </div>
-                          <div className="flex items-center gap-2 text-sm text-muted-foreground">
-                            <span>{quote.location}</span>
-                            {quote.verified && (
-                              <ShieldCheck className="w-4 h-4 text-verified" />
-                            )}
-                          </div>
-                          <div className="flex items-center gap-1 text-sm">
-                            <Star className="w-4 h-4 fill-warning text-warning" />
-                            <span className="font-medium">{quote.rating}</span>
-                          </div>
+                          <span className="text-sm text-muted-foreground">{quote.location}</span>
                         </div>
                       </div>
                     </td>
@@ -246,22 +218,6 @@ const SupplierComparison = () => {
                       {quote.isFastestDelivery && (
                         <span className="text-xs text-ai font-medium">Fastest</span>
                       )}
-                    </td>
-
-                    {/* Trust Score */}
-                    <td className="p-4 text-center">
-                      <div className="flex items-center justify-center gap-2">
-                        <div className="w-16 h-2 bg-muted rounded-full overflow-hidden">
-                          <div 
-                            className={`h-full rounded-full ${
-                              quote.trustScore >= 90 ? "bg-success" : 
-                              quote.trustScore >= 80 ? "bg-accent" : "bg-warning"
-                            }`}
-                            style={{ width: `${quote.trustScore}%` }}
-                          />
-                        </div>
-                        <span className="text-sm font-medium">{quote.trustScore}%</span>
-                      </div>
                     </td>
 
                     {/* Performance */}
@@ -304,7 +260,7 @@ const SupplierComparison = () => {
         </div>
 
         {/* Additional Details */}
-        <div className="grid md:grid-cols-3 gap-6 mt-8">
+        <div className="grid md:grid-cols-2 gap-6 mt-8">
           {/* Payment Terms */}
           <div className="card-elevated p-6">
             <h3 className="font-semibold text-foreground mb-4">Payment Terms Comparison</h3>
@@ -329,27 +285,6 @@ const SupplierComparison = () => {
                 </div>
               ))}
             </div>
-          </div>
-
-          {/* Price History */}
-          <div className="card-elevated p-6">
-            <h3 className="font-semibold text-foreground mb-4">Market Price Trend</h3>
-            <div className="h-32 flex items-end justify-around gap-2">
-              {[65, 72, 68, 75, 70, 78, 72].map((height, i) => (
-                <div 
-                  key={i} 
-                  className="w-full bg-accent/20 rounded-t-lg transition-all hover:bg-accent/40"
-                  style={{ height: `${height}%` }}
-                />
-              ))}
-            </div>
-            <div className="flex justify-between mt-2 text-xs text-muted-foreground">
-              <span>6 mo ago</span>
-              <span>Today</span>
-            </div>
-            <p className="text-sm text-muted-foreground mt-3">
-              Current prices are <span className="text-success font-medium">5% below</span> the 6-month average
-            </p>
           </div>
         </div>
       </main>
