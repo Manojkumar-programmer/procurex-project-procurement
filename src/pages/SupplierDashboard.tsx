@@ -8,7 +8,6 @@ import {
   Bell,
   Edit,
   Trash2,
-  ShoppingCart,
   Plus
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -21,13 +20,6 @@ interface Product {
   category: string;
   priceRange: string;
   stock: string;
-  unit: string;
-}
-
-interface CartItem {
-  id: string;
-  name: string;
-  quantity: number;
   unit: string;
 }
 
@@ -90,25 +82,7 @@ const mockIncomingRFQs = [
 ];
 
 const SupplierDashboard = () => {
-  const [cart, setCart] = useState<CartItem[]>([]);
   const [products, setProducts] = useState(mockProducts);
-
-  const addToCart = (product: Product) => {
-    const existing = cart.find(item => item.id === product.id);
-    if (existing) {
-      setCart(cart.map(item => 
-        item.id === product.id 
-          ? { ...item, quantity: item.quantity + 1 }
-          : item
-      ));
-    } else {
-      setCart([...cart, { id: product.id, name: product.name, quantity: 1, unit: product.unit }]);
-    }
-  };
-
-  const removeFromCart = (id: string) => {
-    setCart(cart.filter(item => item.id !== id));
-  };
 
   const deleteProduct = (id: string) => {
     setProducts(products.filter(p => p.id !== id));
@@ -139,9 +113,9 @@ const SupplierDashboard = () => {
         </div>
 
         {/* Main Content */}
-        <div className="grid lg:grid-cols-3 gap-8">
+        <div>
           {/* Products List */}
-          <div className="lg:col-span-2">
+          <div className="mb-8">
             <div className="flex items-center justify-between mb-4">
               <h2 className="text-lg font-semibold text-foreground flex items-center gap-2">
                 <Package className="w-5 h-5 text-accent" />
@@ -154,7 +128,7 @@ const SupplierDashboard = () => {
                 </Button>
               </Link>
             </div>
-            <div className="space-y-4">
+            <div className="grid md:grid-cols-2 gap-4">
               {products.map((product) => (
                 <div key={product.id} className="card-elevated p-5">
                   <div className="flex items-start justify-between mb-3">
@@ -172,10 +146,6 @@ const SupplierDashboard = () => {
                       </span>
                     </div>
                     <div className="flex gap-2">
-                      <Button variant="outline" size="sm" onClick={() => addToCart(product)}>
-                        <ShoppingCart className="w-4 h-4" />
-                        Add to Cart
-                      </Button>
                       <Link to="/supplier/catalog">
                         <Button variant="ghost" size="icon" className="h-8 w-8">
                           <Edit className="w-4 h-4" />
@@ -194,101 +164,55 @@ const SupplierDashboard = () => {
                 </div>
               ))}
             </div>
-
-            {/* Incoming RFQs */}
-            <div className="mt-8">
-              <div className="flex items-center justify-between mb-4">
-                <h2 className="text-lg font-semibold text-foreground flex items-center gap-2">
-                  <FileText className="w-5 h-5 text-ai" />
-                  Incoming RFQs
-                </h2>
-                <Link to="/supplier/rfqs">
-                  <Button variant="ghost" size="sm">
-                    View All
-                    <ArrowRight className="w-4 h-4" />
-                  </Button>
-                </Link>
-              </div>
-              <div className="space-y-4">
-                {mockIncomingRFQs.map((rfq) => (
-                  <div key={rfq.id} className="card-elevated p-5">
-                    <div className="flex items-start justify-between mb-3">
-                      <div>
-                        <div className="flex items-center gap-2 mb-1">
-                          <h4 className="font-semibold text-foreground">{rfq.product}</h4>
-                        </div>
-                        <p className="text-sm text-muted-foreground">
-                          {rfq.quantity} • {rfq.buyer} • {rfq.location}
-                        </p>
-                      </div>
-                      <span className="badge-ai">
-                        <Sparkles className="w-3 h-3" />
-                        {rfq.matchScore}% Match
-                      </span>
-                    </div>
-                    
-                    <div className="flex items-center justify-between">
-                      <div className="flex items-center gap-4 text-sm">
-                        <span className="flex items-center gap-1 text-muted-foreground">
-                          <Clock className="w-4 h-4" />
-                          {rfq.deadline}
-                        </span>
-                        <span className="font-medium text-foreground">{rfq.estimatedValue}</span>
-                      </div>
-                      <div className="flex gap-2">
-                        <Button variant="outline" size="sm">View Details</Button>
-                        <Button variant="ai" size="sm">Submit Quote</Button>
-                      </div>
-                    </div>
-                  </div>
-                ))}
-              </div>
-            </div>
           </div>
 
-          {/* Cart Sidebar */}
+          {/* Incoming RFQs */}
           <div>
-            <div className="card-elevated p-6 sticky top-8">
-              <div className="flex items-center gap-2 mb-4">
-                <ShoppingCart className="w-5 h-5 text-accent" />
-                <h3 className="font-semibold text-foreground">Cart</h3>
-                {cart.length > 0 && (
-                  <span className="px-2 py-0.5 rounded-full bg-accent/10 text-accent text-xs font-medium">
-                    {cart.length}
-                  </span>
-                )}
-              </div>
-
-              {cart.length === 0 ? (
-                <p className="text-sm text-muted-foreground text-center py-8">
-                  Your cart is empty
-                </p>
-              ) : (
-                <>
-                  <div className="space-y-3 mb-6">
-                    {cart.map((item) => (
-                      <div key={item.id} className="flex items-center justify-between p-3 bg-muted/30 rounded-lg">
-                        <div>
-                          <p className="text-sm font-medium text-foreground">{item.name}</p>
-                          <p className="text-xs text-muted-foreground">{item.quantity} {item.unit}</p>
-                        </div>
-                        <Button 
-                          variant="ghost" 
-                          size="icon" 
-                          className="h-8 w-8 text-destructive"
-                          onClick={() => removeFromCart(item.id)}
-                        >
-                          <Trash2 className="w-4 h-4" />
-                        </Button>
+            <div className="flex items-center justify-between mb-4">
+              <h2 className="text-lg font-semibold text-foreground flex items-center gap-2">
+                <FileText className="w-5 h-5 text-ai" />
+                Incoming RFQs
+              </h2>
+              <Link to="/supplier/rfqs">
+                <Button variant="ghost" size="sm">
+                  View All
+                  <ArrowRight className="w-4 h-4" />
+                </Button>
+              </Link>
+            </div>
+            <div className="grid md:grid-cols-2 gap-4">
+              {mockIncomingRFQs.map((rfq) => (
+                <div key={rfq.id} className="card-elevated p-5">
+                  <div className="flex items-start justify-between mb-3">
+                    <div>
+                      <div className="flex items-center gap-2 mb-1">
+                        <h4 className="font-semibold text-foreground">{rfq.product}</h4>
                       </div>
-                    ))}
+                      <p className="text-sm text-muted-foreground">
+                        {rfq.quantity} • {rfq.buyer} • {rfq.location}
+                      </p>
+                    </div>
+                    <span className="badge-ai">
+                      <Sparkles className="w-3 h-3" />
+                      {rfq.matchScore}% Match
+                    </span>
                   </div>
-
-                  <Button variant="cta" className="w-full">
-                    Proceed to Quote
-                  </Button>
-                </>
-              )}
+                  
+                  <div className="flex items-center justify-between">
+                    <div className="flex items-center gap-4 text-sm">
+                      <span className="flex items-center gap-1 text-muted-foreground">
+                        <Clock className="w-4 h-4" />
+                        {rfq.deadline}
+                      </span>
+                      <span className="font-medium text-foreground">{rfq.estimatedValue}</span>
+                    </div>
+                    <div className="flex gap-2">
+                      <Button variant="outline" size="sm">View Details</Button>
+                      <Button variant="ai" size="sm">Submit Quote</Button>
+                    </div>
+                  </div>
+                </div>
+              ))}
             </div>
           </div>
         </div>

@@ -1,39 +1,39 @@
-import { Upload, Sparkles, GitCompare, ShoppingCart, Truck } from "lucide-react";
+import { Upload, Sparkles, Send, Truck, FileCheck } from "lucide-react";
 
 const steps = [
   {
     number: "01",
     icon: Upload,
-    title: "Create Project & Add Requirements",
-    description: "Upload your BOQ (Excel/PDF) or manually add products with specs, quantities, and delivery dates.",
+    title: "Add Requirements",
+    description: "Manually add products with specs, quantities, and delivery dates. Upload BOQ optionally.",
     color: "primary"
   },
   {
     number: "02",
     icon: Sparkles,
-    title: "AI Shortlists Verified Suppliers",
+    title: "AI Shortlists Suppliers",
     description: "Within 30 seconds, AI matches you with 3-5 pre-verified suppliers based on your requirements.",
     color: "ai"
   },
   {
     number: "03",
-    icon: GitCompare,
-    title: "Compare Quotes & Negotiate",
-    description: "View side-by-side comparisons with AI-highlighted best value. Request final quotes if needed.",
+    icon: Send,
+    title: "Send RFQ",
+    description: "Send your request for quotation to selected suppliers and receive competitive quotes.",
     color: "accent"
   },
   {
     number: "04",
-    icon: ShoppingCart,
-    title: "Place Order with Confidence",
-    description: "Select your preferred supplier and place order with full transparency on pricing and terms.",
+    icon: FileCheck,
+    title: "Compare & Select",
+    description: "Compare supplier quotes side-by-side and select the best match for your project.",
     color: "cta"
   },
   {
     number: "05",
     icon: Truck,
-    title: "Track & Complete Delivery",
-    description: "Real-time delivery tracking with quality verification and payment milestones.",
+    title: "Track Delivery",
+    description: "Real-time delivery tracking from dispatch to final delivery at your site.",
     color: "success"
   }
 ];
@@ -48,7 +48,7 @@ const HowItWorksSection = () => {
             How It Works
           </span>
           <h2 className="text-3xl sm:text-4xl font-bold text-foreground mb-4">
-            End-to-End Procurement in 5 Steps
+            Simple RFQ-Based Procurement
           </h2>
           <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
             From requirement to delivery, experience a seamless procurement journey
@@ -91,53 +91,6 @@ const HowItWorksSection = () => {
                 )}
               </div>
             ))}
-          </div>
-        </div>
-
-        {/* Two Paths Explanation */}
-        <div className="mt-20 grid md:grid-cols-2 gap-8">
-          <div className="bg-card rounded-2xl border border-border p-8">
-            <div className="flex items-center gap-3 mb-4">
-              <div className="w-10 h-10 rounded-xl bg-success/10 flex items-center justify-center">
-                <ShoppingCart className="w-5 h-5 text-success" />
-              </div>
-              <h4 className="text-xl font-semibold text-foreground">Direct Order Path</h4>
-            </div>
-            <p className="text-muted-foreground mb-4">
-              When you know the approximate price range and want quick fulfillment:
-            </p>
-            <ol className="space-y-2">
-              {["Place order based on known price range", "Supplier sends final bill", "Delivery completed"].map((item, i) => (
-                <li key={i} className="flex items-center gap-3 text-sm">
-                  <span className="w-6 h-6 rounded-full bg-success/10 text-success text-xs font-bold flex items-center justify-center">
-                    {i + 1}
-                  </span>
-                  <span className="text-foreground">{item}</span>
-                </li>
-              ))}
-            </ol>
-          </div>
-
-          <div className="bg-card rounded-2xl border border-border p-8">
-            <div className="flex items-center gap-3 mb-4">
-              <div className="w-10 h-10 rounded-xl bg-ai/10 flex items-center justify-center">
-                <GitCompare className="w-5 h-5 text-ai" />
-              </div>
-              <h4 className="text-xl font-semibold text-foreground">Final Quote Path</h4>
-            </div>
-            <p className="text-muted-foreground mb-4">
-              When you need precise quotes and want to negotiate:
-            </p>
-            <ol className="space-y-2">
-              {["Request final quotes from shortlisted suppliers", "Suppliers submit quotes within deadline", "AI highlights best-value supplier", "Place order with selected supplier"].map((item, i) => (
-                <li key={i} className="flex items-center gap-3 text-sm">
-                  <span className="w-6 h-6 rounded-full bg-ai/10 text-ai text-xs font-bold flex items-center justify-center">
-                    {i + 1}
-                  </span>
-                  <span className="text-foreground">{item}</span>
-                </li>
-              ))}
-            </ol>
           </div>
         </div>
       </div>
