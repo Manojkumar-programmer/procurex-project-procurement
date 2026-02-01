@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { 
   ArrowLeft, 
+  ArrowRight,
   Plus, 
   Trash2, 
   Sparkles, 
@@ -107,7 +108,7 @@ const CreateRFQ = () => {
     setTimeout(() => {
       setShortlistedSuppliers(mockSuppliers);
       setIsShortlisting(false);
-      setStep(3);
+      setStep(2);
     }, 2500);
   };
 
@@ -120,6 +121,10 @@ const CreateRFQ = () => {
   };
 
   const handleSendRFQ = () => {
+    setStep(3);
+  };
+
+  const handleConfirmSend = () => {
     navigate("/industry/dashboard");
   };
 
@@ -144,10 +149,9 @@ const CreateRFQ = () => {
         {/* Progress Steps */}
         <div className="flex items-center gap-4 mb-8">
           {[
-            { num: 1, label: "Select Project" },
-            { num: 2, label: "Add Requirements" },
-            { num: 3, label: "AI Shortlist" },
-            { num: 4, label: "Send RFQ" }
+            { num: 1, label: "Add Requirements" },
+            { num: 2, label: "AI Shortlist" },
+            { num: 3, label: "Send RFQ" }
           ].map((s, i) => (
             <div key={s.num} className="flex items-center">
               <div className={`flex items-center gap-2 px-4 py-2 rounded-full transition-colors ${
@@ -164,39 +168,13 @@ const CreateRFQ = () => {
                 )}
                 <span className="text-sm font-medium">{s.label}</span>
               </div>
-              {i < 3 && <div className="w-12 h-0.5 bg-border mx-2" />}
+              {i < 2 && <div className="w-12 h-0.5 bg-border mx-2" />}
             </div>
           ))}
         </div>
 
-        {/* Step 1: Select Project */}
-        {step === 1 && (
-          <div className="max-w-2xl">
-            <div className="card-elevated p-6 mb-6">
-              <h3 className="font-semibold text-foreground mb-4">Select Project</h3>
-              <div className="space-y-3">
-                {["Metro Rail Phase II - Mumbai", "Highway Expansion NH-48", "Industrial Park Setup - Pune"].map((project, i) => (
-                  <button
-                    key={i}
-                    onClick={() => setStep(2)}
-                    className="w-full p-4 rounded-xl border border-border hover:border-accent/50 hover:bg-accent/5 transition-all text-left group"
-                  >
-                    <div className="flex items-center justify-between">
-                      <div>
-                        <h4 className="font-medium text-foreground group-hover:text-accent">{project}</h4>
-                        <p className="text-sm text-muted-foreground">12 existing RFQs • 75% complete</p>
-                      </div>
-                      <div className="w-5 h-5 rounded-full border-2 border-muted group-hover:border-accent transition-colors" />
-                    </div>
-                  </button>
-                ))}
-              </div>
-            </div>
-          </div>
-        )}
-
-        {/* Step 2: Add Requirements */}
-        {step === 2 && (
+        {/* Step 1: Add Requirements */}
+        {step === 1 && !isShortlisting && (
           <div className="max-w-4xl">
             {/* Manual Entry - First */}
             <div className="card-elevated p-6 mb-6">
@@ -301,16 +279,16 @@ const CreateRFQ = () => {
             </div>
 
             <div className="flex justify-end gap-4">
-              <Button variant="outline" onClick={() => setStep(1)}>Back</Button>
               <Button variant="ai" onClick={handleAIShortlist}>
                 <Sparkles className="w-4 h-4" />
                 AI Shortlist Suppliers
+                <ArrowRight className="w-4 h-4" />
               </Button>
             </div>
           </div>
         )}
 
-        {/* Step 3: AI Shortlisting Animation */}
+        {/* AI Shortlisting Animation */}
         {isShortlisting && (
           <div className="max-w-2xl mx-auto text-center py-16">
             <div className="w-20 h-20 mx-auto rounded-2xl bg-gradient-to-br from-ai to-accent flex items-center justify-center mb-6 animate-pulse">
@@ -335,8 +313,8 @@ const CreateRFQ = () => {
           </div>
         )}
 
-        {/* Step 3: Shortlisted Suppliers */}
-        {step === 3 && !isShortlisting && (
+        {/* Step 2: Shortlisted Suppliers */}
+        {step === 2 && !isShortlisting && (
           <div className="max-w-4xl">
             <div className="flex items-center gap-3 mb-6">
               <div className="w-10 h-10 rounded-xl bg-success/10 flex items-center justify-center">
@@ -395,7 +373,10 @@ const CreateRFQ = () => {
             </div>
 
             <div className="flex justify-between items-center">
-              <Button variant="outline" onClick={() => setStep(2)}>Back</Button>
+              <Button variant="outline" onClick={() => setStep(1)}>
+                <ArrowLeft className="w-4 h-4" />
+                Back
+              </Button>
               <div className="flex gap-4">
                 <span className="text-sm text-muted-foreground self-center">
                   {selectedSuppliers.length} suppliers selected
@@ -406,8 +387,51 @@ const CreateRFQ = () => {
                   onClick={handleSendRFQ}
                 >
                   Send RFQ to Selected
+                  <ArrowRight className="w-4 h-4" />
                 </Button>
               </div>
+            </div>
+          </div>
+        )}
+
+        {/* Step 3: Send RFQ Confirmation */}
+        {step === 3 && (
+          <div className="max-w-2xl mx-auto text-center py-16">
+            <div className="w-20 h-20 mx-auto rounded-2xl bg-success/10 flex items-center justify-center mb-6">
+              <CheckCircle2 className="w-10 h-10 text-success" />
+            </div>
+            <h2 className="text-2xl font-bold text-foreground mb-3">RFQ Ready to Send</h2>
+            <p className="text-muted-foreground mb-8">
+              Your RFQ will be sent to {selectedSuppliers.length} selected suppliers. They will receive a notification and can submit their quotes.
+            </p>
+            
+            <div className="card-elevated p-6 mb-8 text-left">
+              <h4 className="font-semibold text-foreground mb-4">Summary</h4>
+              <div className="space-y-3">
+                <div className="flex justify-between">
+                  <span className="text-muted-foreground">Products</span>
+                  <span className="font-medium text-foreground">{items.length} items</span>
+                </div>
+                <div className="flex justify-between">
+                  <span className="text-muted-foreground">Suppliers</span>
+                  <span className="font-medium text-foreground">{selectedSuppliers.length} selected</span>
+                </div>
+                <div className="flex justify-between">
+                  <span className="text-muted-foreground">Expected Response</span>
+                  <span className="font-medium text-foreground">Within 48 hours</span>
+                </div>
+              </div>
+            </div>
+
+            <div className="flex justify-center gap-4">
+              <Button variant="outline" onClick={() => setStep(2)}>
+                <ArrowLeft className="w-4 h-4" />
+                Back
+              </Button>
+              <Button variant="cta" onClick={handleConfirmSend}>
+                Confirm & Send RFQ
+                <ArrowRight className="w-4 h-4" />
+              </Button>
             </div>
           </div>
         )}

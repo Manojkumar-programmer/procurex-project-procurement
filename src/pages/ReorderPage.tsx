@@ -10,7 +10,8 @@ import {
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import DashboardSidebar from "@/components/dashboard/DashboardSidebar";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
+import { useToast } from "@/hooks/use-toast";
 
 interface ReorderItem {
   id: string;
@@ -72,8 +73,9 @@ const mockReorderItems: ReorderItem[] = [
 ];
 
 const ReorderPage = () => {
-  const navigate = useNavigate();
+  const { toast } = useToast();
   const [items, setItems] = useState(mockReorderItems);
+  const [showSuccessPopup, setShowSuccessPopup] = useState(false);
 
   const toggleSelection = (id: string) => {
     setItems(items.map(item => 
@@ -96,13 +98,27 @@ const ReorderPage = () => {
   const selectedItems = items.filter(item => item.selected);
 
   const handlePlaceOrder = () => {
-    // Navigate to confirmation or order placement
-    navigate("/industry/rfq/create");
+    setShowSuccessPopup(true);
+    setTimeout(() => {
+      setShowSuccessPopup(false);
+    }, 2000);
   };
 
   return (
     <div className="min-h-screen bg-background">
       <DashboardSidebar type="industry" />
+      
+      {/* Success Popup */}
+      {showSuccessPopup && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-background/80 backdrop-blur-sm">
+          <div className="bg-card border border-border rounded-2xl p-8 shadow-lg animate-in fade-in zoom-in duration-300 text-center">
+            <div className="w-16 h-16 mx-auto rounded-full bg-success/10 flex items-center justify-center mb-4">
+              <CheckCircle2 className="w-8 h-8 text-success" />
+            </div>
+            <h3 className="text-xl font-semibold text-foreground">Reorder successfully placed</h3>
+          </div>
+        </div>
+      )}
       
       <main className="p-8 pl-20">
         {/* Header */}

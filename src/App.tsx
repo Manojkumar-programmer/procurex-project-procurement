@@ -11,6 +11,7 @@ import ReorderPage from "./pages/ReorderPage";
 import SupplierComparison from "./pages/SupplierComparison";
 import SupplierDashboard from "./pages/SupplierDashboard";
 import SupplierCatalog from "./pages/SupplierCatalog";
+import OrderTracking from "./pages/OrderTracking";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -31,6 +32,7 @@ const App = () => (
           <Route path="/industry/rfq/compare" element={<SupplierComparison />} />
           <Route path="/industry/rfq/:id/compare" element={<SupplierComparison />} />
           <Route path="/industry/reorder" element={<ReorderPage />} />
+          <Route path="/industry/orders/tracking" element={<OrderTracking />} />
           
           {/* Supplier Routes */}
           <Route path="/supplier/dashboard" element={<SupplierDashboard />} />
