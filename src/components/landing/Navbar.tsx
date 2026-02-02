@@ -1,12 +1,12 @@
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
-import { Menu, X, Boxes, ShoppingCart, Bell } from "lucide-react";
+import { Menu, X, Boxes, Bell } from "lucide-react";
 import { Link } from "react-router-dom";
 import { useToast } from "@/hooks/use-toast";
+import CartSheet from "./CartSheet";
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
-  const [cartCount] = useState(2);
   const { toast } = useToast();
 
   const handleNotificationClick = () => {
@@ -52,16 +52,7 @@ const Navbar = () => {
               <Bell className="w-5 h-5" />
               <span className="absolute top-1 right-1 w-2 h-2 bg-cta rounded-full" />
             </Button>
-            <Link to="/industry/dashboard" className="relative">
-              <Button variant="ghost" size="icon">
-                <ShoppingCart className="w-5 h-5" />
-                {cartCount > 0 && (
-                  <span className="absolute -top-1 -right-1 w-5 h-5 bg-cta text-cta-foreground rounded-full text-xs flex items-center justify-center font-medium">
-                    {cartCount}
-                  </span>
-                )}
-              </Button>
-            </Link>
+            <CartSheet />
             <Link to="/login">
               <Button variant="ghost" size="sm">Login</Button>
             </Link>
