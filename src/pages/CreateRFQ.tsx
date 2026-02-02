@@ -75,6 +75,7 @@ const CreateRFQ = () => {
   const [isShortlisting, setIsShortlisting] = useState(false);
   const [shortlistedSuppliers, setShortlistedSuppliers] = useState<ShortlistedSupplier[]>([]);
   const [selectedSuppliers, setSelectedSuppliers] = useState<string[]>([]);
+  const [showSuccessPopup, setShowSuccessPopup] = useState(false);
   
   const [items, setItems] = useState<RFQItem[]>([
     { id: "1", product: "", specifications: "", quantity: "", unit: "tons", requiredDate: "" }
@@ -125,12 +126,28 @@ const CreateRFQ = () => {
   };
 
   const handleConfirmSend = () => {
-    navigate("/industry/dashboard");
+    setShowSuccessPopup(true);
+    setTimeout(() => {
+      setShowSuccessPopup(false);
+      navigate("/industry/rfq/finalized");
+    }, 2000);
   };
 
   return (
     <div className="min-h-screen bg-background">
       <DashboardSidebar type="industry" />
+      
+      {/* RFQ Success Popup */}
+      {showSuccessPopup && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-background/80 backdrop-blur-sm">
+          <div className="bg-card border border-border rounded-2xl p-8 shadow-lg animate-in fade-in zoom-in duration-300 text-center">
+            <div className="w-16 h-16 mx-auto rounded-full bg-success/10 flex items-center justify-center mb-4">
+              <CheckCircle2 className="w-8 h-8 text-success" />
+            </div>
+            <h3 className="text-xl font-semibold text-foreground">RFQ sent successfully</h3>
+          </div>
+        </div>
+      )}
       
       <main className="p-8 pl-20">
         {/* Header */}

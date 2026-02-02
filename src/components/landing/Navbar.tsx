@@ -1,10 +1,20 @@
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
-import { Menu, X, Boxes } from "lucide-react";
+import { Menu, X, Boxes, ShoppingCart, Bell } from "lucide-react";
 import { Link } from "react-router-dom";
+import { useToast } from "@/hooks/use-toast";
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
+  const [cartCount] = useState(2);
+  const { toast } = useToast();
+
+  const handleNotificationClick = () => {
+    toast({
+      title: "Final quote sent by Alpha Steels Pvt Ltd",
+      duration: 1000,
+    });
+  };
 
   return (
     <nav className="fixed top-0 left-0 right-0 z-50 glass">
@@ -33,6 +43,25 @@ const Navbar = () => {
 
           {/* Desktop CTA */}
           <div className="hidden md:flex items-center gap-3">
+            <Button 
+              variant="ghost" 
+              size="icon" 
+              className="relative"
+              onClick={handleNotificationClick}
+            >
+              <Bell className="w-5 h-5" />
+              <span className="absolute top-1 right-1 w-2 h-2 bg-cta rounded-full" />
+            </Button>
+            <Link to="/industry/dashboard" className="relative">
+              <Button variant="ghost" size="icon">
+                <ShoppingCart className="w-5 h-5" />
+                {cartCount > 0 && (
+                  <span className="absolute -top-1 -right-1 w-5 h-5 bg-cta text-cta-foreground rounded-full text-xs flex items-center justify-center font-medium">
+                    {cartCount}
+                  </span>
+                )}
+              </Button>
+            </Link>
             <Link to="/login">
               <Button variant="ghost" size="sm">Login</Button>
             </Link>
