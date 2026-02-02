@@ -9,7 +9,7 @@ const products = [
   },
   { 
     name: "Cement", 
-    image: "https://images.unsplash.com/photo-1518709766631-a6a7f45921c3?w=400&h=300&fit=crop&q=80"
+    image: "https://images.unsplash.com/photo-1590846083693-f23fdede3a7e?w=400&h=300&fit=crop&q=80"
   },
   { 
     name: "Electrical Cables", 

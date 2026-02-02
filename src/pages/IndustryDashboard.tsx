@@ -9,9 +9,12 @@ import {
   CheckCircle2,
   ShoppingCart,
   Trash2,
-  MapPin
+  MapPin,
+  Plus,
+  Minus
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
 import DashboardSidebar from "@/components/dashboard/DashboardSidebar";
 import { Link } from "react-router-dom";
 import { useToast } from "@/hooks/use-toast";
@@ -85,11 +88,30 @@ const IndustryDashboard = () => {
     setCart(cart.filter(item => item.id !== id));
   };
 
+  const updateQuantity = (id: string, delta: number) => {
+    setCart(cart.map(item => 
+      item.id === id ? { ...item, quantity: Math.max(1, item.quantity + delta) } : item
+    ));
+  };
+
+  const setQuantity = (id: string, value: number) => {
+    setCart(cart.map(item => 
+      item.id === id ? { ...item, quantity: Math.max(1, value) } : item
+    ));
+  };
+
   const handleReorder = () => {
     setShowSuccessPopup(true);
     setTimeout(() => {
       setShowSuccessPopup(false);
     }, 2000);
+  };
+
+  const handleNotificationClick = () => {
+    toast({
+      title: "Final quote sent by Alpha Steels Pvt Ltd",
+      duration: 1000,
+    });
   };
 
   return (
@@ -116,7 +138,12 @@ const IndustryDashboard = () => {
             <p className="text-muted-foreground">Here's your procurement overview</p>
           </div>
           <div className="flex items-center gap-4">
-            <Button variant="ghost" size="icon" className="relative">
+            <Button 
+              variant="ghost" 
+              size="icon" 
+              className="relative"
+              onClick={handleNotificationClick}
+            >
               <Bell className="w-5 h-5" />
               <span className="absolute top-1 right-1 w-2 h-2 bg-cta rounded-full" />
             </Button>
@@ -242,19 +269,44 @@ const IndustryDashboard = () => {
                 <>
                   <div className="space-y-3 mb-6">
                     {cart.map((item) => (
-                      <div key={item.id} className="flex items-center justify-between p-3 bg-muted/30 rounded-lg">
-                        <div>
+                      <div key={item.id} className="p-3 bg-muted/30 rounded-lg">
+                        <div className="flex items-center justify-between mb-2">
                           <p className="text-sm font-medium text-foreground">{item.name}</p>
-                          <p className="text-xs text-muted-foreground">{item.quantity} {item.unit} • {item.price}</p>
+                          <Button 
+                            variant="ghost" 
+                            size="icon" 
+                            className="h-6 w-6 text-destructive"
+                            onClick={() => removeFromCart(item.id)}
+                          >
+                            <Trash2 className="w-3 h-3" />
+                          </Button>
                         </div>
-                        <Button 
-                          variant="ghost" 
-                          size="icon" 
-                          className="h-8 w-8 text-destructive"
-                          onClick={() => removeFromCart(item.id)}
-                        >
-                          <Trash2 className="w-4 h-4" />
-                        </Button>
+                        <p className="text-xs text-muted-foreground mb-2">{item.price}</p>
+                        <div className="flex items-center gap-2">
+                          <Button 
+                            variant="outline" 
+                            size="icon" 
+                            className="h-6 w-6"
+                            onClick={() => updateQuantity(item.id, -10)}
+                          >
+                            <Minus className="w-3 h-3" />
+                          </Button>
+                          <Input
+                            type="number"
+                            value={item.quantity}
+                            onChange={(e) => setQuantity(item.id, parseInt(e.target.value) || 1)}
+                            className="w-16 h-6 text-center text-xs"
+                          />
+                          <Button 
+                            variant="outline" 
+                            size="icon" 
+                            className="h-6 w-6"
+                            onClick={() => updateQuantity(item.id, 10)}
+                          >
+                            <Plus className="w-3 h-3" />
+                          </Button>
+                          <span className="text-xs text-muted-foreground">{item.unit}</span>
+                        </div>
                       </div>
                     ))}
                   </div>
