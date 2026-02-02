@@ -16,7 +16,7 @@ import {
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import DashboardSidebar from "@/components/dashboard/DashboardSidebar";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useToast } from "@/hooks/use-toast";
 
 interface CartItem {
@@ -78,11 +78,11 @@ const mockCompletedProjects = [
 
 const IndustryDashboard = () => {
   const { toast } = useToast();
+  const navigate = useNavigate();
   const [cart, setCart] = useState<CartItem[]>([
     { id: "1", name: "TMT Steel Bars Fe-500D", quantity: 100, unit: "Tons", price: "₹52,000/ton" },
     { id: "2", name: "Cement OPC 53 Grade", quantity: 500, unit: "Bags", price: "₹350/bag" }
   ]);
-  const [showSuccessPopup, setShowSuccessPopup] = useState(false);
 
   const removeFromCart = (id: string) => {
     setCart(cart.filter(item => item.id !== id));
@@ -101,10 +101,7 @@ const IndustryDashboard = () => {
   };
 
   const handleReorder = () => {
-    setShowSuccessPopup(true);
-    setTimeout(() => {
-      setShowSuccessPopup(false);
-    }, 2000);
+    navigate("/industry/reorder");
   };
 
   const handleNotificationClick = () => {
@@ -117,18 +114,6 @@ const IndustryDashboard = () => {
   return (
     <div className="min-h-screen bg-background">
       <DashboardSidebar type="industry" />
-      
-      {/* Success Popup */}
-      {showSuccessPopup && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-background/80 backdrop-blur-sm">
-          <div className="bg-card border border-border rounded-2xl p-8 shadow-lg animate-in fade-in zoom-in duration-300 text-center">
-            <div className="w-16 h-16 mx-auto rounded-full bg-success/10 flex items-center justify-center mb-4">
-              <CheckCircle2 className="w-8 h-8 text-success" />
-            </div>
-            <h3 className="text-xl font-semibold text-foreground">Reorder successfully placed</h3>
-          </div>
-        </div>
-      )}
       
       <main className="p-8 pl-20">
         {/* Header */}

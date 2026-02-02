@@ -1,5 +1,4 @@
-import { Building2, ChevronLeft, ChevronRight } from "lucide-react";
-import { Button } from "@/components/ui/button";
+import { Building2 } from "lucide-react";
 
 const suppliers = [
   { name: "Alpha Steels Pvt Ltd", products: "TMT Bars, MS Plates, Steel Angles" },
@@ -11,7 +10,12 @@ const suppliers = [
   { name: "Apex Industrial Mart", products: "Electrical Cables, Switch Gears, Panels" },
   { name: "Union Steel House", products: "Stainless Steel, Alloy Steel, Tool Steel" },
   { name: "Metro Build Suppliers", products: "Bricks, Blocks, Waterproofing Materials" },
-  { name: "Core Tech Materials", products: "Industrial Bearings, Conveyor Parts, Gears" }
+  { name: "Core Tech Materials", products: "Industrial Bearings, Conveyor Parts, Gears" },
+  { name: "Reliable Steel Corp", products: "MS Angles, Channels, Beams" },
+  { name: "Precision Hardware", products: "Nuts, Bolts, Washers, Anchors" },
+  { name: "BuildMax Enterprises", products: "Sand, Gravel, Crusite Materials" },
+  { name: "PowerLine Electricals", products: "Wires, MCBs, Distribution Boards" },
+  { name: "HydroFlow Systems", products: "Valves, Pumps, Flow Meters" }
 ];
 
 const SuppliersSection = () => {
@@ -27,43 +31,25 @@ const SuppliersSection = () => {
           </h2>
         </div>
         
-        <div className="relative">
-          {/* Navigation Arrows */}
-          <Button
-            variant="ghost"
-            size="icon"
-            className="absolute -left-4 top-1/2 -translate-y-1/2 z-10 bg-background shadow-md hover:bg-muted hidden md:flex"
-          >
-            <ChevronLeft className="w-5 h-5" />
-          </Button>
-          <Button
-            variant="ghost"
-            size="icon"
-            className="absolute -right-4 top-1/2 -translate-y-1/2 z-10 bg-background shadow-md hover:bg-muted hidden md:flex"
-          >
-            <ChevronRight className="w-5 h-5" />
-          </Button>
-
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4">
-            {suppliers.map((supplier, index) => (
-              <div
-                key={index}
-                className="bg-card rounded-xl border border-border p-4 hover:shadow-medium hover:border-accent/30 transition-all duration-300 cursor-pointer"
-              >
-                <div className="flex items-center gap-3 mb-2">
-                  <div className="w-10 h-10 rounded-lg bg-primary/10 flex items-center justify-center flex-shrink-0">
-                    <Building2 className="w-5 h-5 text-primary" />
-                  </div>
-                  <h4 className="font-semibold text-foreground text-sm leading-tight">
-                    {supplier.name}
-                  </h4>
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+          {suppliers.map((supplier, index) => (
+            <div
+              key={index}
+              className="bg-gradient-to-br from-card to-muted/20 rounded-xl border border-border p-4 hover:shadow-lg hover:border-accent/40 hover:scale-[1.02] transition-all duration-300 cursor-pointer group"
+            >
+              <div className="flex items-center gap-3 mb-2">
+                <div className="w-10 h-10 rounded-lg bg-primary/10 group-hover:bg-primary/20 flex items-center justify-center flex-shrink-0 transition-colors">
+                  <Building2 className="w-5 h-5 text-primary" />
                 </div>
-                <p className="text-xs text-muted-foreground line-clamp-2">
-                  {supplier.products}
-                </p>
+                <h4 className="font-semibold text-foreground text-sm leading-tight group-hover:text-primary transition-colors">
+                  {supplier.name}
+                </h4>
               </div>
-            ))}
-          </div>
+              <p className="text-xs text-muted-foreground line-clamp-2 pl-13">
+                {supplier.products}
+              </p>
+            </div>
+          ))}
         </div>
       </div>
     </section>
