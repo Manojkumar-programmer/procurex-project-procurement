@@ -12,6 +12,7 @@ import { Input } from "@/components/ui/input";
 import DashboardSidebar from "@/components/dashboard/DashboardSidebar";
 import { Link } from "react-router-dom";
 import { useToast } from "@/hooks/use-toast";
+import NavigationArrows from "@/components/navigation/NavigationArrows";
 
 interface ReorderItem {
   id: string;
@@ -256,6 +257,7 @@ const ReorderPage = () => {
           </div>
         </div>
       </main>
+      <NavigationArrows showBack={true} backPath="/industry/dashboard" />
     </div>
   );
 };

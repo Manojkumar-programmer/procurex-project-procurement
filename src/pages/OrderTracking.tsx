@@ -11,6 +11,7 @@ import {
 import { Button } from "@/components/ui/button";
 import DashboardSidebar from "@/components/dashboard/DashboardSidebar";
 import { Link } from "react-router-dom";
+import NavigationArrows from "@/components/navigation/NavigationArrows";
 
 const trackingSteps = [
   { id: 1, label: "Order Placed", status: "completed", date: "Jan 20, 2026 • 10:30 AM" },
@@ -140,6 +141,7 @@ const OrderTracking = () => {
           ))}
         </div>
       </main>
+      <NavigationArrows showBack={true} backPath="/industry/dashboard" />
     </div>
   );
 };

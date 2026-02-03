@@ -10,6 +10,7 @@ import AboutSection from "@/components/landing/AboutSection";
 import CTASection from "@/components/landing/CTASection";
 import Footer from "@/components/landing/Footer";
 import SplashScreen from "@/components/landing/SplashScreen";
+import NavigationArrows from "@/components/navigation/NavigationArrows";
 
 const Index = () => {
   const [showSplash, setShowSplash] = useState(true);
@@ -27,6 +28,7 @@ const Index = () => {
       <AboutSection />
       <CTASection />
       <Footer />
+      <NavigationArrows showBack={false} showForward={true} forwardPath="/industry/dashboard" />
     </div>
   );
 };
