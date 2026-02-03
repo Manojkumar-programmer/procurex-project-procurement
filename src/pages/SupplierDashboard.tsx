@@ -19,6 +19,7 @@ interface Product {
   priceRange: string;
   stock: string;
   unit: string;
+  image: string;
 }
 
 const mockProducts: Product[] = [
@@ -28,7 +29,8 @@ const mockProducts: Product[] = [
     category: "Steel",
     priceRange: "₹52,000 - ₹55,000/ton",
     stock: "500 Tons",
-    unit: "Tons"
+    unit: "Tons",
+    image: "https://images.unsplash.com/photo-1504328345606-18bbc8c9d7d1?w=200&h=200&fit=crop"
   },
   {
     id: "2",
@@ -36,7 +38,8 @@ const mockProducts: Product[] = [
     category: "Steel",
     priceRange: "₹54,000 - ₹57,000/ton",
     stock: "200 Tons",
-    unit: "Tons"
+    unit: "Tons",
+    image: "https://images.unsplash.com/photo-1587293852726-70cdb56c2866?w=200&h=200&fit=crop"
   },
   {
     id: "3",
@@ -44,7 +47,8 @@ const mockProducts: Product[] = [
     category: "Steel",
     priceRange: "₹48,000 - ₹51,000/ton",
     stock: "150 Tons",
-    unit: "Tons"
+    unit: "Tons",
+    image: "https://images.unsplash.com/photo-1530982011887-3cc11cc85693?w=200&h=200&fit=crop"
   },
   {
     id: "4",
@@ -52,7 +56,8 @@ const mockProducts: Product[] = [
     category: "Steel",
     priceRange: "₹56,000 - ₹59,000/ton",
     stock: "300 Tons",
-    unit: "Tons"
+    unit: "Tons",
+    image: "https://images.unsplash.com/photo-1565193566173-7a0ee3dbe261?w=200&h=200&fit=crop"
   }
 ];
 
@@ -181,18 +186,24 @@ const SupplierDashboard = () => {
             <div className="grid md:grid-cols-2 gap-4">
               {mockProducts.map((product) => (
                 <div key={product.id} className="card-elevated p-5">
-                  <div className="flex items-start justify-between mb-3">
-                    <div>
-                      <h4 className="font-semibold text-foreground">{product.name}</h4>
-                      <p className="text-sm text-muted-foreground">{product.category}</p>
+                  <div className="flex items-start gap-4">
+                    <img 
+                      src={product.image} 
+                      alt={product.name}
+                      className="w-16 h-16 rounded-lg object-cover flex-shrink-0 border border-border"
+                    />
+                    <div className="flex-1 min-w-0">
+                      <div className="flex items-start justify-between mb-2">
+                        <div>
+                          <h4 className="font-semibold text-foreground">{product.name}</h4>
+                          <p className="text-sm text-muted-foreground">{product.category}</p>
+                        </div>
+                        <span className="font-medium text-foreground text-sm">{product.priceRange}</span>
+                      </div>
+                      <span className="px-2 py-1 rounded-full bg-success/10 text-success text-xs font-medium">
+                        In Stock: {product.stock}
+                      </span>
                     </div>
-                    <span className="font-medium text-foreground">{product.priceRange}</span>
-                  </div>
-                  
-                  <div className="flex items-center justify-between">
-                    <span className="px-2 py-1 rounded-full bg-success/10 text-success text-xs font-medium">
-                      In Stock: {product.stock}
-                    </span>
                   </div>
                 </div>
               ))}

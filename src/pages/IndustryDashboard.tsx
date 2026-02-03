@@ -101,7 +101,14 @@ const IndustryDashboard = () => {
     ));
   };
 
-  const handleReorder = () => {
+  const handleOrderReorder = () => {
+    toast({
+      title: "Reorder placed successfully",
+      duration: 2000,
+    });
+  };
+
+  const handleProjectReorder = () => {
     navigate("/industry/reorder");
   };
 
@@ -182,7 +189,7 @@ const IndustryDashboard = () => {
                       <div className="text-sm text-muted-foreground">
                         {order.project} • {order.completedDate}
                       </div>
-                      <Button variant="outline" size="sm" onClick={handleReorder}>
+                      <Button variant="outline" size="sm" onClick={handleOrderReorder}>
                         <RefreshCw className="w-4 h-4" />
                         Reorder
                       </Button>
@@ -223,7 +230,7 @@ const IndustryDashboard = () => {
                       <div className="text-sm text-muted-foreground">
                         {project.ordersCount} orders • Completed {project.completedDate}
                       </div>
-                      <Button variant="outline" size="sm" onClick={handleReorder}>
+                      <Button variant="outline" size="sm" onClick={handleProjectReorder}>
                         <RefreshCw className="w-4 h-4" />
                         Reorder
                       </Button>
