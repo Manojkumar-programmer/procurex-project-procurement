@@ -18,6 +18,7 @@ import { Input } from "@/components/ui/input";
 import DashboardSidebar from "@/components/dashboard/DashboardSidebar";
 import { Link, useNavigate } from "react-router-dom";
 import { useToast } from "@/hooks/use-toast";
+import NavigationArrows from "@/components/navigation/NavigationArrows";
 
 interface CartItem {
   id: string;
@@ -305,6 +306,7 @@ const IndustryDashboard = () => {
           </div>
         </div>
       </main>
+      <NavigationArrows showBack={true} backPath="/" showForward={true} forwardPath="/industry/rfq/create" />
     </div>
   );
 };

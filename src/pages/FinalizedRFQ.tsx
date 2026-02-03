@@ -10,6 +10,7 @@ import { Button } from "@/components/ui/button";
 import DashboardSidebar from "@/components/dashboard/DashboardSidebar";
 import { Link, useNavigate } from "react-router-dom";
 import { useToast } from "@/hooks/use-toast";
+import NavigationArrows from "@/components/navigation/NavigationArrows";
 
 interface Supplier {
   id: string;
@@ -193,6 +194,7 @@ const FinalizedRFQ = () => {
           </div>
         </div>
       </main>
+      <NavigationArrows showBack={true} backPath="/industry/dashboard" />
     </div>
   );
 };

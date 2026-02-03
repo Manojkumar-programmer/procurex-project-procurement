@@ -15,6 +15,7 @@ import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import DashboardSidebar from "@/components/dashboard/DashboardSidebar";
 import { Link, useNavigate } from "react-router-dom";
+import NavigationArrows from "@/components/navigation/NavigationArrows";
 
 interface RFQItem {
   id: string;
@@ -76,6 +77,7 @@ const CreateRFQ = () => {
   const [shortlistedSuppliers, setShortlistedSuppliers] = useState<ShortlistedSupplier[]>([]);
   const [selectedSuppliers, setSelectedSuppliers] = useState<string[]>([]);
   const [showSuccessPopup, setShowSuccessPopup] = useState(false);
+  const [showOrderPopup, setShowOrderPopup] = useState(false);
   
   const [items, setItems] = useState<RFQItem[]>([
     { id: "1", product: "", specifications: "", quantity: "", unit: "tons", requiredDate: "" }
@@ -125,6 +127,14 @@ const CreateRFQ = () => {
     setStep(3);
   };
 
+  const handleSelectAndPlaceOrder = () => {
+    setShowOrderPopup(true);
+    setTimeout(() => {
+      setShowOrderPopup(false);
+      navigate("/industry/dashboard");
+    }, 2000);
+  };
+
   const handleConfirmSend = () => {
     setShowSuccessPopup(true);
     setTimeout(() => {
@@ -145,6 +155,19 @@ const CreateRFQ = () => {
               <CheckCircle2 className="w-8 h-8 text-success" />
             </div>
             <h3 className="text-xl font-semibold text-foreground">RFQ sent successfully</h3>
+          </div>
+        </div>
+      )}
+
+      {/* Order Placed Success Popup */}
+      {showOrderPopup && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-background/80 backdrop-blur-sm">
+          <div className="bg-card border border-border rounded-2xl p-8 shadow-lg animate-in fade-in zoom-in duration-300 text-center max-w-md">
+            <div className="w-16 h-16 mx-auto rounded-full bg-success/10 flex items-center justify-center mb-4">
+              <CheckCircle2 className="w-8 h-8 text-success" />
+            </div>
+            <h3 className="text-xl font-semibold text-foreground mb-2">Order placed successfully</h3>
+            <p className="text-sm text-muted-foreground">Final bill will be shared within a few hours.</p>
           </div>
         </div>
       )}
@@ -394,10 +417,17 @@ const CreateRFQ = () => {
                 <ArrowLeft className="w-4 h-4" />
                 Back
               </Button>
-              <div className="flex gap-4">
-                <span className="text-sm text-muted-foreground self-center">
+              <div className="flex items-center gap-4">
+                <span className="text-sm text-muted-foreground">
                   {selectedSuppliers.length} suppliers selected
                 </span>
+                <Button 
+                  variant="success" 
+                  disabled={selectedSuppliers.length === 0}
+                  onClick={handleSelectAndPlaceOrder}
+                >
+                  Select & Place Order
+                </Button>
                 <Button 
                   variant="cta" 
                   disabled={selectedSuppliers.length === 0}
@@ -453,6 +483,7 @@ const CreateRFQ = () => {
           </div>
         )}
       </main>
+      <NavigationArrows showBack={true} backPath="/industry/dashboard" />
     </div>
   );
 };

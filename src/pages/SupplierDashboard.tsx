@@ -1,18 +1,16 @@
-import { useState } from "react";
 import { 
   FileText, 
   Package, 
   Clock, 
   Sparkles,
   ArrowRight,
-  Bell,
-  Edit,
-  Trash2,
-  Plus
+  Bell
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import DashboardSidebar from "@/components/dashboard/DashboardSidebar";
 import { Link } from "react-router-dom";
+import { useToast } from "@/hooks/use-toast";
+import NavigationArrows from "@/components/navigation/NavigationArrows";
 
 interface Product {
   id: string;
@@ -82,10 +80,13 @@ const mockIncomingRFQs = [
 ];
 
 const SupplierDashboard = () => {
-  const [products, setProducts] = useState(mockProducts);
+  const { toast } = useToast();
 
-  const deleteProduct = (id: string) => {
-    setProducts(products.filter(p => p.id !== id));
+  const handleNotificationClick = () => {
+    toast({
+      title: "New RFQ received from Metro Rail Corp",
+      duration: 1000,
+    });
   };
 
   return (
@@ -100,7 +101,12 @@ const SupplierDashboard = () => {
             <p className="text-muted-foreground">Manage your products and respond to RFQs</p>
           </div>
           <div className="flex items-center gap-4">
-            <Button variant="ghost" size="icon" className="relative">
+            <Button 
+              variant="ghost" 
+              size="icon" 
+              className="relative"
+              onClick={handleNotificationClick}
+            >
               <Bell className="w-5 h-5" />
               <span className="absolute top-1 right-1 w-2 h-2 bg-cta rounded-full" />
             </Button>
@@ -112,62 +118,10 @@ const SupplierDashboard = () => {
           </div>
         </div>
 
-        {/* Main Content */}
+        {/* Main Content - Reordered: Incoming RFQs first, then Products */}
         <div>
-          {/* Products List */}
+          {/* Incoming RFQs - FIRST */}
           <div className="mb-8">
-            <div className="flex items-center justify-between mb-4">
-              <h2 className="text-lg font-semibold text-foreground flex items-center gap-2">
-                <Package className="w-5 h-5 text-accent" />
-                Your Products
-              </h2>
-              <Link to="/supplier/catalog">
-                <Button variant="outline" size="sm">
-                  <Plus className="w-4 h-4" />
-                  Add Product
-                </Button>
-              </Link>
-            </div>
-            <div className="grid md:grid-cols-2 gap-4">
-              {products.map((product) => (
-                <div key={product.id} className="card-elevated p-5">
-                  <div className="flex items-start justify-between mb-3">
-                    <div>
-                      <h4 className="font-semibold text-foreground">{product.name}</h4>
-                      <p className="text-sm text-muted-foreground">{product.category}</p>
-                    </div>
-                    <span className="font-medium text-foreground">{product.priceRange}</span>
-                  </div>
-                  
-                  <div className="flex items-center justify-between">
-                    <div className="flex items-center gap-4 text-sm">
-                      <span className="px-2 py-1 rounded-full bg-success/10 text-success text-xs font-medium">
-                        In Stock: {product.stock}
-                      </span>
-                    </div>
-                    <div className="flex gap-2">
-                      <Link to="/supplier/catalog">
-                        <Button variant="ghost" size="icon" className="h-8 w-8">
-                          <Edit className="w-4 h-4" />
-                        </Button>
-                      </Link>
-                      <Button 
-                        variant="ghost" 
-                        size="icon" 
-                        className="h-8 w-8 text-destructive"
-                        onClick={() => deleteProduct(product.id)}
-                      >
-                        <Trash2 className="w-4 h-4" />
-                      </Button>
-                    </div>
-                  </div>
-                </div>
-              ))}
-            </div>
-          </div>
-
-          {/* Incoming RFQs */}
-          <div>
             <div className="flex items-center justify-between mb-4">
               <h2 className="text-lg font-semibold text-foreground flex items-center gap-2">
                 <FileText className="w-5 h-5 text-ai" />
@@ -215,8 +169,38 @@ const SupplierDashboard = () => {
               ))}
             </div>
           </div>
+
+          {/* Products List - SECOND (Read-only, no add/edit/delete) */}
+          <div>
+            <div className="flex items-center justify-between mb-4">
+              <h2 className="text-lg font-semibold text-foreground flex items-center gap-2">
+                <Package className="w-5 h-5 text-accent" />
+                Your Products
+              </h2>
+            </div>
+            <div className="grid md:grid-cols-2 gap-4">
+              {mockProducts.map((product) => (
+                <div key={product.id} className="card-elevated p-5">
+                  <div className="flex items-start justify-between mb-3">
+                    <div>
+                      <h4 className="font-semibold text-foreground">{product.name}</h4>
+                      <p className="text-sm text-muted-foreground">{product.category}</p>
+                    </div>
+                    <span className="font-medium text-foreground">{product.priceRange}</span>
+                  </div>
+                  
+                  <div className="flex items-center justify-between">
+                    <span className="px-2 py-1 rounded-full bg-success/10 text-success text-xs font-medium">
+                      In Stock: {product.stock}
+                    </span>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
         </div>
       </main>
+      <NavigationArrows showBack={true} backPath="/" />
     </div>
   );
 };
