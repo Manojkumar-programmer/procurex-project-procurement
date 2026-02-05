@@ -35,7 +35,7 @@ const mockCompletedOrders = [
     quantity: "500 Tons",
     supplier: "Tata Steel Distributors",
     completedDate: "Jan 15, 2026",
-    totalValue: "₹2.6 Cr",
+    totalValue: "₹25 L - 30 L",
     project: "Metro Rail Phase II"
   },
   {
@@ -44,7 +44,7 @@ const mockCompletedOrders = [
     quantity: "10,000 Bags",
     supplier: "UltraTech Cement",
     completedDate: "Jan 10, 2026",
-    totalValue: "₹35 L",
+    totalValue: "₹30 L - 40 L",
     project: "Highway Expansion"
   },
   {
@@ -53,7 +53,7 @@ const mockCompletedOrders = [
     quantity: "5,000 meters",
     supplier: "Havells India",
     completedDate: "Dec 28, 2025",
-    totalValue: "₹45 L",
+    totalValue: "₹40 L - 50 L",
     project: "Industrial Park"
   }
 ];
@@ -64,7 +64,7 @@ const mockCompletedProjects = [
     name: "Industrial Park Phase I",
     location: "Pune, Maharashtra",
     completedDate: "Dec 2025",
-    totalProcurement: "₹12 Cr",
+    totalProcurement: "₹8 L - 15 L",
     ordersCount: 45
   },
   {
@@ -72,7 +72,7 @@ const mockCompletedProjects = [
     name: "Warehouse Complex",
     location: "Nagpur, Maharashtra",
     completedDate: "Nov 2025",
-    totalProcurement: "₹8 Cr",
+    totalProcurement: "₹5 L - 10 L",
     ordersCount: 32
   }
 ];

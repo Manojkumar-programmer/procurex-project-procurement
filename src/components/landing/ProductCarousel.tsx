@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import cementImage from "@/assets/cement-powder.jpg";
 
 const products = [
   { 
@@ -9,7 +10,7 @@ const products = [
   },
   { 
     name: "Cement", 
-    image: "https://images.unsplash.com/photo-1578662996442-48f60103fc96?w=400&h=300&fit=crop&q=80"
+    image: cementImage
   },
   { 
     name: "Electrical Cables", 

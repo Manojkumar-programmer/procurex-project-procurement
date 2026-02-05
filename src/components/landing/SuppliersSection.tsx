@@ -1,4 +1,4 @@
-import { Building2 } from "lucide-react";
+import { Building2, BadgeCheck } from "lucide-react";
 
 const suppliers = [
   { name: "Alpha Steels Pvt Ltd", products: "TMT Bars, MS Plates, Steel Angles" },
@@ -35,17 +35,25 @@ const SuppliersSection = () => {
           {suppliers.map((supplier, index) => (
             <div
               key={index}
-              className="bg-gradient-to-br from-card to-muted/20 rounded-xl border border-border p-4 hover:shadow-lg hover:border-accent/40 hover:scale-[1.02] transition-all duration-300 cursor-pointer group"
+              className="relative bg-gradient-to-br from-card via-card to-accent/5 rounded-xl border border-border/60 p-5 hover:shadow-xl hover:shadow-accent/10 hover:border-accent/50 hover:scale-[1.02] transition-all duration-300 cursor-pointer group overflow-hidden"
             >
-              <div className="flex items-center gap-3 mb-2">
-                <div className="w-10 h-10 rounded-lg bg-primary/10 group-hover:bg-primary/20 flex items-center justify-center flex-shrink-0 transition-colors">
-                  <Building2 className="w-5 h-5 text-primary" />
+              {/* Subtle glow effect on hover */}
+              <div className="absolute inset-0 bg-gradient-to-r from-transparent via-accent/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+              
+              <div className="relative flex items-center gap-3 mb-3">
+                <div className="w-11 h-11 rounded-xl bg-gradient-to-br from-primary/15 to-accent/10 group-hover:from-primary/25 group-hover:to-accent/20 flex items-center justify-center flex-shrink-0 transition-all duration-300 shadow-sm">
+                  <Building2 className="w-5 h-5 text-primary group-hover:scale-110 transition-transform" />
                 </div>
-                <h4 className="font-semibold text-foreground text-sm leading-tight group-hover:text-primary transition-colors">
-                  {supplier.name}
-                </h4>
+                <div className="flex-1 min-w-0">
+                  <div className="flex items-center gap-1.5">
+                    <h4 className="font-semibold text-foreground text-sm leading-tight group-hover:text-primary transition-colors truncate">
+                      {supplier.name}
+                    </h4>
+                    <BadgeCheck className="w-4 h-4 text-accent flex-shrink-0" />
+                  </div>
+                </div>
               </div>
-              <p className="text-xs text-muted-foreground line-clamp-2 pl-13">
+              <p className="relative text-xs text-muted-foreground line-clamp-2 pl-14 group-hover:text-muted-foreground/80 transition-colors">
                 {supplier.products}
               </p>
             </div>

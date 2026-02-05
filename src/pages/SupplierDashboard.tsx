@@ -69,7 +69,7 @@ const mockIncomingRFQs = [
     buyer: "Metro Rail Corp",
     location: "Mumbai",
     deadline: "2 days left",
-    estimatedValue: "₹2.6 Cr",
+    estimatedValue: "₹25 L - 30 L",
     matchScore: 95
   },
   {
@@ -79,7 +79,7 @@ const mockIncomingRFQs = [
     buyer: "Industrial Builders",
     location: "Pune",
     deadline: "3 days left",
-    estimatedValue: "₹1.1 Cr",
+    estimatedValue: "₹8 L - 12 L",
     matchScore: 92
   }
 ];
